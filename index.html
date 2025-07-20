@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Respiratory Disease</title>
+  <link rel="icon" type="image/x-icon" href="static/images/lung.png">
+
+  <!-- Mobile Specific Metas -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+
+  <!-- Fonts and Stylesheets -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/plugins/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #3a6186, #89253e);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 800px;
+      padding: 20px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      color: #333;
+    }
+
+    .btn {
+      border-radius: 30px;
+      padding: 10px 30px;
+      font-size: 1rem;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    footer {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+    .scroll-top-to {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Welcome to Respiratory Disease Diagnosis</h1>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <h4><b>Upload Audio File</b></h4>
+          <form method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".wav" class="form-control mt-3">
+            <input type="submit" value="Upload and Predict" class="btn btn-success mt-4">
+          </form>
+          {% if prediction %}
+            <div class="text-center mt-4">
+              <h2 id="prediction"><b>Predicted Disease:</b> {{ prediction }}</h2>
+              <p id="description">A detailed description will appear here.</p>
+              <p id="remedy">Recommended remedies will appear here.</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-12 mt-4">
+      
+      </div>
+    </div>
+  </div>
+
+  
+
+  <!-- Scripts -->
+  <script>
+    function updateDescription() {
+      var predictionElement = document.getElementById('prediction');
+      if (!predictionElement) return;
+
+      var prediction = predictionElement.innerText.replace('Predicted Disease:', '').trim();
+      var description = document.getElementById('description');
+      var remedy = document.getElementById('remedy');
+      switch(prediction) {
+        case 'COPD':
+          description.innerText = "A chronic lung disease characterized by airflow obstruction, making it difficult to breathe.";
+          remedy.innerText = "Remedy: Avoid smoking, use prescribed inhalers, and maintain regular checkups with your doctor.";
+          break;
+        case 'Bronchiolitis':
+          description.innerText = "An inflammatory respiratory condition affecting small airways.";
+          remedy.innerText = "Remedy: Ensure proper hydration, use humidifiers, and consult a pediatrician for children.";
+          break;
+        case 'Pneumonia':
+          description.innerText = "An infection that inflames the air sacs in one or both lungs, leading to symptoms like cough, fever, and difficulty breathing.";
+          remedy.innerText = "Remedy: Take prescribed antibiotics, rest, and stay hydrated.";
+          break;
+        case 'URTI':
+          description.innerText = "An infection involving the upper respiratory tract, commonly caused by viruses, presenting symptoms like nasal congestion and sore throat.";
+          remedy.innerText = "Remedy: Stay hydrated, rest, and use over-the-counter medications for symptom relief.";
+          break;
+        case 'Healthy':
+          description.innerText = "No significant illness or disease detected. Lungs are functioning normally.";
+          remedy.innerText = "Remedy: Maintain a healthy lifestyle with regular exercise and avoid smoking.";
+          break;
+        default:
+          description.innerText = "Details unavailable.";
+          remedy.innerText = "Remedy information unavailable.";
+      }
+    }
+
+    updateDescription();
+  </script>
+</body>
+</html>
