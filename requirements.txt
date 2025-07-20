@@ -1,0 +1,8 @@
+REQUIREMENTS:
+
+flask
+librosa
+numpy
+tensorflow
+keras
+resampy
